@@ -4,7 +4,7 @@ import numpy as np
 
 class ImageProcess:
     # Read image
-    im = cv2.imread("flower.jpg", cv2.IMREAD_COLOR)
+    im = cv2.imread("download.jpeg", cv2.IMREAD_COLOR)
     #type=im.type()
     #print(im.dtype)
     #print(im.shape)
@@ -57,8 +57,8 @@ class ImageProcess:
 
     # Filter by Area.
     params.filterByArea = True
-    params.minArea = 30
-    params.maxArea = 100
+    params.minArea = 300
+    params.maxArea = 1000
 
     # Filter by Circularity
     params.filterByCircularity = True
@@ -86,19 +86,19 @@ class ImageProcess:
     #     else:
     #         print
     #         "no blobs"
-    #
-    #         # Draw green circles around detected blobs
-    #         im_with_keypoints = cv2.drawKeypoints(res, keypoints, np.array([]), (0, 255, 0),
-    #                                     cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
-    edges = cv2.Canny(res, 100, 200)
-    imgray = cv2.cvtColor(res, cv2.COLOR_BGR2GRAY)
-    (ret, thresh) = cv2.threshold(imgray, 127, 255, 0)
-    im2,contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    cnt=contours[0]
-    M=cv2.moments(cnt)
-    print(M)
-    cv2.drawContours(res, contours, -1, (0, 255, 0), 3)
+            # Draw green circles around detected blobs
+    im_with_keypoints = cv2.drawKeypoints(im, keypoints, np.array([]), (255, 0, 0),
+                                        cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+
+    # edges = cv2.Canny(res, 100, 200)
+    # imgray = cv2.cvtColor(res, cv2.COLOR_BGR2GRAY)
+    # (ret, thresh) = cv2.threshold(imgray, 127, 255, 0)
+    # im2,contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    # cnt=contours[0]
+    # M=cv2.moments(cnt)
+    # print(M)
+    # cv2.drawContours(res, contours, -1, (0, 255, 0), 3)
 
     # open windows with original image, mask, res, and image with keypoints marked
     cv2.imshow('frame', frame)
@@ -106,9 +106,9 @@ class ImageProcess:
     # cv2.imshow('mask2', mask2)
     cv2.imshow('res', res)
     # cv2.imshow('im2',im2)
-    cv2.imshow('edges', edges)
+    #cv2.imshow('edges', edges)
 
     # cv2.imshow('res2', res2)
-    # cv2.imshow("Keypoints for " + 'im', im_with_keypoints)
+    cv2.imshow("Keypoints" , im_with_keypoints)
 
     k = cv2.waitKey(0)

@@ -45,8 +45,11 @@ class Vision:
         im =cv_image
         frame = cv2.GaussianBlur(im, (3, 3), 0)
 
+
         # Switch image from BGR colorspace to HSV
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        img_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
 
 
         # define range of purple color in HSV
@@ -78,30 +81,30 @@ class Vision:
         params = cv2.SimpleBlobDetector_Params()
 
         # Change thresholds
-        params.minThreshold = 0;
-        params.maxThreshold = 256;
+        params.minThreshold =10;
+        params.maxThreshold = 30;
 
         # Filter by Area.
         params.filterByArea = True
-        params.minArea = 30
-        params.maxArea = 100
+        params.minArea = 100
+
 
         # Filter by Circularity
         params.filterByCircularity = True
-        params.minCircularity = 0.2
+        params.minCircularity = 0.01
 
         # Filter by Convexity
         params.filterByConvexity = True
-        params.minConvexity = 0.5
+        params.minConvexity = 0.87
 
         # Filter by Inertia
         params.filterByInertia = True
-        params.minInertiaRatio = 0.5
+        params.minInertiaRatio = 0.01
 
         detector = cv2.SimpleBlobDetector_create(params)
 
         # Detect blobs.
-        keypoints = detector.detect(mask_final)
+        keypoints = detector.detect(img_gray)
         if keypoints:
             print
             "found %d blobs" % len(keypoints)
@@ -114,8 +117,7 @@ class Vision:
                 "no blobs"
 
                 # Draw green circles around detected blobs
-                im_with_keypoints = cv2.drawKeypoints(res, keypoints, np.array([]), (0, 255, 0),
-                                            cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        im_with_keypoints = cv2.drawKeypoints(img_gray, keypoints, np.array([]), (0, 255, 0),cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
         edges = cv2.Canny(result, 100, 200)
         imgray = cv2.cvtColor(result, cv2.COLOR_BGR2GRAY)
@@ -159,17 +161,33 @@ class Vision:
         cv2.drawContours(result, contours, -1, (0, 255, 0), 3)
         cv2.circle(result, (int(self.goalCoordination.xCoordinate.data),int(self.goalCoordination.yCoordinate.data)), 7, (255, 255, 255), -1)
 
-        #if np.array_equal(mask_final,red_mask):
 
-        print(np.where((result == red_mask)))
-
+        #print(np.where((result == red_mask)))
+        # max=0
+        # min=640
+        # if (cv2.countNonZero(red_mask)!= 0):
+        #     for i in range(0, red_mask.shape[0]):
+        #             for j in range(0, red_mask.shape[1]):
+        #                 if(red_mask[i, j] == 255):
+        #                     if(j > max):
+        #                         max=j
+        #                     if( j < min):
+        #                         min=j
+        # print(min)
+        # print(max)
+        # nonzero = cv2.countNonZero(red_mask)
+        # print(nonzero)
+        # #white_coords = np.argwhere(red_mask == 255)
+        # white_coords=cv2.findNonZero(red_mask)
+        # print(white_coords)
 
 
         cv2.imshow('frame',frame)
         cv2.imshow('thresh',thresh)
         cv2.imshow('res', result)
         cv2.imshow('edges', edges)
-        cv2.imshow('mask' , blue_mask)
+        cv2.imshow('red_mask' , red_mask)
+        cv2.imshow('im_with_keypoints',im_with_keypoints)
         k = cv2.waitKey(1)
 
 
