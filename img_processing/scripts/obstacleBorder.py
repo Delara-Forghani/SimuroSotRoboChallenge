@@ -18,4 +18,4 @@ class Border(Point):
     def get_left_bot(self):
         return self.left_bot_point
     def get_right_bot(self):
-        return self.right_bot_point                
+        return self.right_bot_point

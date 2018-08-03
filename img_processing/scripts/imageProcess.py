@@ -25,6 +25,9 @@ class ImageProcess:
 
     red2Min=(160 , 100 ,100)
     red2Max=(179 , 255, 255)
+
+    greenMax=()
+    greenMin=()
     # Sets pixels to white if in purple range, else will be set to black
 
     mask1 = cv2.inRange(hsv, blueMin, blueMax)
