@@ -1,6 +1,6 @@
 int32 requestNum
+std_msgs/Bool pick_yellow_goal
 ---
-Coordination right_top
-Coordination left_top
-Coordination right_bot
-Coordination left_bot
+Rectangle[] obstacle_positions
+Rectangle goal_position
+std_msgs/Bool no_goal_found

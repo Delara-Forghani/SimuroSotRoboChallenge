@@ -1,3 +1,3 @@
 Header header
-std_msgs/Float32 xCoordinate
-std_msgs/Float32 yCoordinate
+std_msgs/Float32 x
+std_msgs/Float32 y
